@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextStyle.listItem.title"
+        android:id="@+id/list_item_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/list_item_margin_bottom"
+        android:layout_marginEnd="@dimen/list_item_margin_end"
+        android:layout_marginStart="@dimen/list_item_margin_start"
+        android:layout_marginTop="@dimen/list_item_margin_top"
+        tools:text="Article Title" />
+
+    <TextView
+        style="@style/TextStyle.listItem.regularItem"
+        android:id="@+id/list_item_section_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/list_item_margin_bottom"
+        android:layout_marginEnd="@dimen/list_item_margin_end"
+        android:layout_marginStart="@dimen/list_item_margin_start"
+        android:layout_marginTop="@dimen/list_item_margin_top"
+        tools:text="Article Section" />
+
+    <TextView
+        style="@style/TextStyle.listItem.regularItem"
+        android:id="@+id/list_item_author_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/list_item_margin_bottom"
+        android:layout_marginEnd="@dimen/list_item_margin_end"
+        android:layout_marginStart="@dimen/list_item_margin_start"
+        android:layout_marginTop="@dimen/list_item_margin_top"
+        tools:text="Author" />
+
+    <TextView
+        style="@style/TextStyle.listItem.regularItem"
+        android:id="@+id/list_item_date_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/list_item_margin_bottom"
+        android:layout_marginEnd="@dimen/list_item_margin_end"
+        android:layout_marginStart="@dimen/list_item_margin_start"
+        android:layout_marginTop="@dimen/list_item_margin_top"
+        tools:text="Article Publishing date" />
+
+</LinearLayout>

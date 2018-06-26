@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Fifa World Cup 2018 News</string>
+
+    <string name="section">Section: %1$s</string>
+    <string name="author">By: %1$s</string>
+    <string name="published">Published: %1$s</string>
+
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_articles">No articles available</string>
+</resources>
