@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,7 +28,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * URL String for {@link Article} data from the Guardian
      */
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=football&from-date=2018-06-10&q=World%20cup&show-tags=contributor&api-key=test";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=football&from-date=2018-06-20&show-tags=contributor&page-size=200&q=football&api-key=53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
     /**
      * Constant value for the article loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
@@ -134,5 +136,25 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<Article>> loader) {
         // Loader reset, so we can clear out our existing data.
         articleAdapter.clear();
+    }
+
+    /**
+     * Inflates the settings menu specified in main.xml when NewsActivity opens up
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

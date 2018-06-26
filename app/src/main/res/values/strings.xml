@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fifa World Cup 2018 News</string>
+    <string name="app_name">Football News</string>
 
     <string name="section">Section: %1$s</string>
     <string name="author">By: %1$s</string>
@@ -7,4 +7,8 @@
 
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_articles">No articles available</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Football News Settings</string>
+
 </resources>
