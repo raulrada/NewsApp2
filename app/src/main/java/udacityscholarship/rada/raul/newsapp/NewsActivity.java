@@ -30,6 +30,10 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=football&from-date=2018-06-20&show-tags=contributor&page-size=200&q=football&api-key=53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
     /**
+     * Private API key provided by the Guardian. DO NOT SHARE!!!
+     */
+    private static final String GUARDIAN_API_KEY = "53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
+    /**
      * Constant value for the article loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */

@@ -11,4 +11,8 @@
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Football News Settings</string>
 
+    <string name="settings_max_number_articles_label">Maximum Number of Articles</string>
+    <string name="settings_max_number_articles_key">max_number_articles</string>
+    <string name="settings_max_number_articles_default">10</string>
+    
 </resources>
