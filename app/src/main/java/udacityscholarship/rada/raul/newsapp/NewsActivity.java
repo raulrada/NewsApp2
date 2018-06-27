@@ -32,11 +32,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
      * URL String for {@link Article} data from the Guardian
      */
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
-    //"https://content.guardianapis.com/search?section=football&from-date=2018-06-20&show-tags=contributor&page-size=200&q=football&api-key=53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
     /**
      * Section key for the Guardian API
      */
     private static final String GUARDIAN_API_SECTION_KEY = "section";
+    /**
+     * Order-by key for the Guardian API
+     */
+    private static final String GUARDIAN_API_ORDER_BY_KEY = "order-by";
     /**
      * Section value for the Guardian API
      */
@@ -164,9 +167,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         //Retrieve String value containing the maximum number of articles selected by user in the
         //preferences section; the second value is the default value for the maximum number of
         //{@link Articles} to be displayed
-        String maxNumberArticles = sharedPreferences.getString (
+        String maxNumberArticles = sharedPreferences.getString(
                 getString(R.string.settings_max_number_articles_key),
                 getString(R.string.settings_max_number_articles_default));
+
+        String orderBy = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
 
         // parse breaks apart the URI string that is passed into its parameter
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
@@ -176,12 +183,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //append query parameters and their values
         uriBuilder.appendQueryParameter(GUARDIAN_API_SECTION_KEY, GUARDIAN_API_SECTION_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_ORDER_BY_KEY, orderBy);
         uriBuilder.appendQueryParameter(GUARDIAN_API_FROM_DATE_KEY, GUARDIAN_API_FROM_DATE_VALUE);
-        uriBuilder.appendQueryParameter(GUARDIAN_API_SHOW_TAGS_KEY,GUARDIAN_API_SHOW_TAGS_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_SHOW_TAGS_KEY, GUARDIAN_API_SHOW_TAGS_VALUE);
         uriBuilder.appendQueryParameter(GUARDIAN_API_PAGE_SIZE_KEY, maxNumberArticles);
         uriBuilder.appendQueryParameter(GUARDIAN_API_QUERY_KEY, GUARDIAN_API_QUERY_VALUE);
         uriBuilder.appendQueryParameter(GUARDIAN_API_KEY, GUARDIAN_API_KEY_VALUE);
-        Log.v("rrraul", "Completed URI: "+uriBuilder.toString());
 
         // Create a new loader for the completed URI
         return new ArticleLoader(this, uriBuilder.toString());
