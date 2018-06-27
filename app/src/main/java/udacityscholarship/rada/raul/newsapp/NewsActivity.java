@@ -4,11 +4,14 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +31,52 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * URL String for {@link Article} data from the Guardian
      */
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=football&from-date=2018-06-20&show-tags=contributor&page-size=200&q=football&api-key=53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
+    //"https://content.guardianapis.com/search?section=football&from-date=2018-06-20&show-tags=contributor&page-size=200&q=football&api-key=53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
+    /**
+     * Section key for the Guardian API
+     */
+    private static final String GUARDIAN_API_SECTION_KEY = "section";
+    /**
+     * Section value for the Guardian API
+     */
+    private static final String GUARDIAN_API_SECTION_VALUE = "football";
+    /**
+     * From-date key for the Guardian API
+     */
+    private static final String GUARDIAN_API_FROM_DATE_KEY = "from-date";
+    /**
+     * Minimum date for articles retrieved from the Guardian API
+     */
+    private static final String GUARDIAN_API_FROM_DATE_VALUE = "2018-06-20";
+    /**
+     * show-tags key for the Guardian API
+     */
+    private static final String GUARDIAN_API_SHOW_TAGS_KEY = "show-tags";
+    /**
+     * show-tags value for articles retrieved from the Guardian API
+     */
+    private static final String GUARDIAN_API_SHOW_TAGS_VALUE = "contributor";
+    /**
+     * page-size key for the Guardian API
+     */
+    private static final String GUARDIAN_API_PAGE_SIZE_KEY = "page-size";
+    /**
+     * show-tags key for the Guardian API
+     */
+    private static final String GUARDIAN_API_QUERY_KEY = "q";
+    /**
+     * show-tags value for articles retrieved from the Guardian API
+     */
+    private static final String GUARDIAN_API_QUERY_VALUE = "football";
+    /**
+     * api-key key
+     */
+    private static final String GUARDIAN_API_KEY = "api-key";
     /**
      * Private API key provided by the Guardian. DO NOT SHARE!!!
      */
-    private static final String GUARDIAN_API_KEY = "53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
+    private static final String GUARDIAN_API_KEY_VALUE = "53a3a1b5-f5b3-4fa4-bc0f-41379837a268";
     /**
      * Constant value for the article loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
@@ -111,10 +155,36 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    //method implementation inspired by Udacity code at https://github.com/udacity/ud843-QuakeReport/blob/30a05f980f2cb404b324b96bcc8e6b29c248ea16/app/src/main/java/com/example/android/quakereport/EarthquakeActivity.java
     @Override
     public Loader<List<Article>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
-        return new ArticleLoader(this, GUARDIAN_REQUEST_URL);
+        //Create SharedPreferences object for retrieving user's preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Retrieve String value containing the maximum number of articles selected by user in the
+        //preferences section; the second value is the default value for the maximum number of
+        //{@link Articles} to be displayed
+        String maxNumberArticles = sharedPreferences.getString (
+                getString(R.string.settings_max_number_articles_key),
+                getString(R.string.settings_max_number_articles_default));
+
+        // parse breaks apart the URI string that is passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        //append query parameters and their values
+        uriBuilder.appendQueryParameter(GUARDIAN_API_SECTION_KEY, GUARDIAN_API_SECTION_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_FROM_DATE_KEY, GUARDIAN_API_FROM_DATE_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_SHOW_TAGS_KEY,GUARDIAN_API_SHOW_TAGS_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_PAGE_SIZE_KEY, maxNumberArticles);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_QUERY_KEY, GUARDIAN_API_QUERY_VALUE);
+        uriBuilder.appendQueryParameter(GUARDIAN_API_KEY, GUARDIAN_API_KEY_VALUE);
+        Log.v("rrraul", "Completed URI: "+uriBuilder.toString());
+
+        // Create a new loader for the completed URI
+        return new ArticleLoader(this, uriBuilder.toString());
     }
 
     @Override
